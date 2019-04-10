@@ -4,20 +4,20 @@
     /// Provides a success flag and message 
     /// useful as a method return type.
     /// </summary>
-    public class OperationResult
+    public class OperationResult<TResult, TMessage>
     {
         public OperationResult()
         {
         }
 
-        public OperationResult(bool success, string message) : this()
+        public OperationResult(TResult result, TMessage message) : this()
         {
-            this.Success = success;
+            this.Result = result;
             this.Message = message;
         }
 
-        public bool Success { get; set; }
-        public string Message { get; set; }
+        public TResult Result { get; set; }
+        public TMessage Message { get; set; }
     }
 
 }
