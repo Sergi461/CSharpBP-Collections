@@ -33,10 +33,27 @@ namespace Acme.Biz.Tests
             var expected = "test";
 
             // Act
-            var actual = repository.RetrieveValue<string>("Select ...", "test");
+            var actual = repository.RetrieveValue("Select ...", "test");
 
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void RetrieveTest()
+        {
+            // Arrange 
+            var repository = new VendorRepository();
+            var expected = new List<Vendor>();
+            expected.Add(new Vendor() { VendorId = 1, CompanyName = "ABC Corp", Email = "abc@abc.com" });
+            expected.Add(new Vendor() { VendorId = 2, CompanyName = "XYZ Inc", Email = "xyz@xyz.com" });
+            // Act
+            var actual = repository.Retrieve();
+
+            // Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+
     }
 }
