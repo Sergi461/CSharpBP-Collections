@@ -31,11 +31,12 @@ namespace Acme.Biz
             return vendor;
         }
 
+
         /// <summary>
         /// Retreives all of the approved vendors
         /// </summary>
         /// <returns></returns>
-        public List<Vendor> Retrieve()
+        public ICollection<Vendor> Retrieve()
         {
             if (vendors == null)
             {
@@ -48,29 +49,6 @@ namespace Acme.Biz
             {
                 Console.WriteLine(vendor);
             }
-
-            return vendors;
-        }
-
-        public Dictionary<string, Vendor> RetrieveWithKeys()
-        {
-            var vendors = new Dictionary<string, Vendor>()
-            {
-                {"ABC Corp", new Vendor(){ VendorId = 5, CompanyName = "ABC Corp", Email = "abc@abc.com" } },
-                {"XYZ Inc", new Vendor(){ VendorId = 8, CompanyName = "XYZ Inc", Email = "xyz@xyz.com" } },
-            };
-
-            foreach (var element in vendors)
-            {
-                var vendor = element.Value;
-                var key = element.Key;
-                Console.WriteLine($"Key: {key} Value: {vendor}");
-            }
-
-            //foreach (var companyName in vendors.Keys)
-            //{
-            //    Console.WriteLine(vendors[companyName].Email);
-            //}
 
             return vendors;
         }
@@ -106,5 +84,19 @@ namespace Acme.Biz
 
             return success;
         }
+
+        public IEnumerable<Vendor> RetrieveWithIterator()
+        {
+            //Get the data from the database
+            this.Retrieve();
+
+            foreach (var vendor in vendors)
+            {
+                Console.WriteLine($"Vendor Id: {vendor.VendorId}");
+                yield return vendor;
+            }
+        }
+
     }
+
 }
